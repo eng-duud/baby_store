@@ -680,7 +680,7 @@ export function Admin() {
                         {expandedOrder === order.id && (
                           <tr>
                             <td colSpan={7} style={{ padding: '1rem', background: 'rgba(0,0,0,0.02)' }}>
-                              <div style={{ padding: '1rem', background: 'white', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
+                              <div style={{ padding: '1rem', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
                                 <h4 style={{ marginBottom: '1rem', borderBottom: '1px solid var(--border)', paddingBottom: '0.5rem' }}>تفاصيل المنتجات:</h4>
                                 <div className="grid" style={{ gap: '0.5rem' }}>
                                   {order.items?.map((item: any, idx: number) => (

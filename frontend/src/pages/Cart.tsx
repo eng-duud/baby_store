@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useCart } from '../store/cartStore';
-import { Trash2, Minus, Plus, MessageCircle } from 'lucide-react';
+import { Trash2, Minus, Plus, MessageCircle, ShoppingBag } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 import { API_URL } from '../config';
 const STORE_PHONE = '967776626456'; // Updated phone number
@@ -18,9 +19,34 @@ export function Cart({
 
   if (cart.length === 0) {
     return (
-      <div className="container" style={{ padding: '4rem 1.5rem', textAlign: 'center' }}>
-        <h2 style={{ marginBottom: '1rem' }}>سلة التسوق فارغة</h2>
-        <p className="text-muted">يبدو أنك لم تضف أي شيء إلى السلة بعد.</p>
+      <div className="container" style={{ padding: '6rem 1.5rem', textAlign: 'center' }}>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div style={{ 
+            width: '120px', 
+            height: '120px', 
+            background: 'rgba(255,123,156,0.1)', 
+            borderRadius: '50%', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            margin: '0 auto 2rem',
+            color: 'var(--primary)'
+          }}>
+            <ShoppingBag size={60} />
+          </div>
+          <h2 style={{ marginBottom: '1rem', fontSize: '2rem' }}>سلة التسوق فارغة</h2>
+          <p className="text-muted" style={{ fontSize: '1.2rem', maxWidth: '500px', margin: '0 auto 2.5rem', lineHeight: '1.6' }}>
+            سلة تسوقك فارغة حالياً.. ولكنها تنتظر أن تمتلئ بكل ما هو مميز لصغيرك! <br />
+            صغيرك يستحق الأفضل، ابدأ برحلة تسوق ممتعة الآن.
+          </p>
+          <Link to="/" className="btn btn-primary" style={{ padding: '1rem 2.5rem', fontSize: '1.1rem', borderRadius: 'var(--radius-full)' }}>
+            استعراض الأصناف والمنتجات
+          </Link>
+        </motion.div>
       </div>
     );
   }
@@ -84,8 +110,9 @@ export function Cart({
   };
 
   return (
-    <div className="container" style={{ padding: '2rem 1.5rem 4rem' }}>
-      <h1 style={{ marginBottom: '2rem' }}>سلة التسوق</h1>
+    <div className="page-transition" style={{ paddingBottom: '6rem' }}>
+      <div className="container" style={{ padding: '6rem 1.5rem 2rem' }}>
+        <h1 style={{ marginBottom: '3rem', fontSize: '2.5rem' }}>سلة التسوق</h1>
       
       <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
         {/* Cart Items */}
@@ -131,15 +158,15 @@ export function Cart({
         </div>
 
         {/* Checkout Form */}
-        <div className="card" style={{ padding: '2rem', height: 'fit-content' }}>
-          <h2 style={{ marginBottom: '1.5rem', fontSize: '1.5rem' }}>ملخص الطلب</h2>
+        <div className="card" style={{ padding: '2.5rem', height: 'fit-content', border: 'none', background: 'var(--card)', boxShadow: 'var(--shadow-lg)' }}>
+          <h2 style={{ marginBottom: '2rem', fontSize: '1.6rem', borderBottom: '1px solid var(--border)', paddingBottom: '1rem' }}>ملخص الطلب</h2>
           
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem', fontSize: '1.25rem', fontWeight: 'bold' }}>
-            <span>الإجمالي</span>
-            <span style={{ color: 'var(--primary)' }}>{totalPrice.toFixed(2)} ر.ي</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2.5rem', fontSize: '1.4rem', fontWeight: '800' }}>
+            <span>الإجمالي المستحق</span>
+            <span style={{ color: 'var(--primary)' }}>{totalPrice.toFixed(2)} <small style={{ fontSize: '0.9rem' }}>ر.ي</small></span>
           </div>
 
-          <form onSubmit={handleOrder} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <form onSubmit={handleOrder} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             {error && (
               <div style={{ padding: '1rem', background: '#fee2e2', color: '#b91c1c', borderRadius: 'var(--radius-md)' }}>
                 {error}
@@ -190,6 +217,7 @@ export function Cart({
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 }
