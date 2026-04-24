@@ -46,6 +46,13 @@ body {
   -webkit-font-smoothing: antialiased;
   direction: rtl;
   text-align: right;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  width: 100%;
+}
+
+html {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 a {
@@ -377,4 +384,67 @@ h3 { font-size: 1.5rem; }
 
 .float {
   animation: float 4s ease-in-out infinite;
+}
+
+/* --- Mobile Responsiveness --- */
+
+/* Utility Classes for visibility */
+.mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+  
+  .mobile-only {
+    display: flex !important;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  h1 { font-size: 2.25rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.25rem; }
+
+  .header {
+    top: 0.75rem;
+  }
+
+  .header .container {
+    max-width: 100%;
+    padding: 0 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .navbar-logo, .navbar-actions {
+    padding: 0.4rem 0.75rem;
+  }
+
+  .navbar-logo {
+    gap: 0.5rem;
+  }
+
+  /* Grid adjustments */
+  .grid {
+    gap: 1.5rem !important;
+  }
+
+  section {
+    padding: 4rem 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 1.85rem; }
+  
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem !important;
+  }
 }

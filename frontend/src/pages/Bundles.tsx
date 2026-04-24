@@ -51,7 +51,7 @@ export function Bundles({ addToCart }: { addToCart: ReturnType<typeof useCart>['
           </p>
         </header>
 
-        <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))', gap: '3.5rem' }}>
+        <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '2rem' }}>
           {bundles.map(bundle => (
             <motion.div 
               key={bundle.id} 

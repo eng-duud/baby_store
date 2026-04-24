@@ -8,7 +8,7 @@ export function Home() {
       {/* Hero Section */}
       <section style={{ 
         position: 'relative',
-        padding: '10rem 1.5rem 8rem', 
+        padding: '8rem 1rem 6rem', 
         overflow: 'hidden',
         background: 'linear-gradient(135deg, rgba(255,123,156,0.08) 0%, rgba(96,165,250,0.08) 100%)',
         textAlign: 'center'
@@ -48,7 +48,11 @@ export function Home() {
       {/* About / Features Section */}
       <section style={{ padding: '8rem 0' }}>
         <div className="container">
-          <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem' }}>
+          <motion.div 
+            layout
+            className="grid" 
+            style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1.5rem' }}
+          >
             <motion.div 
               whileHover={{ y: -10 }}
               style={{ padding: '3rem', background: 'var(--card)', borderRadius: '2.5rem', border: '1px solid var(--border)', textAlign: 'center' }}
@@ -81,7 +85,7 @@ export function Home() {
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>تسوق آمن</h3>
               <p className="text-muted">خدمة توصيل سريعة ودفع آمن، مع إمكانية التواصل المباشر عبر الواتساب لأي استفسار.</p>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 

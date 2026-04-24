@@ -27,35 +27,78 @@ export function Navbar({ totalItems }: { totalItems: number }) {
   ];
 
   return (
-    <header className="header" style={{ top: '1.5rem', pointerEvents: 'none' }}>
-      <div className="container" style={{ 
-        maxWidth: '1400px', 
-        display: 'grid', 
-        gridTemplateColumns: '1fr auto 1fr', 
-        alignItems: 'center', 
-        gap: '1rem',
-        pointerEvents: 'auto'
-      }}>
+    <header className="header">
+      <div className="container" style={{ pointerEvents: 'none' }}>
         
-        {/* Left Side (Empty for balancing) */}
-        <div className="desktop-only" />
+        {/* Actions Section (Left on RTL) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', pointerEvents: 'auto' }} className="navbar-actions">
+          {/* Cart with Badge */}
+          <Link 
+            to="/cart" 
+            style={{ 
+              position: 'relative', 
+              width: '42px',
+              height: '42px',
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              borderRadius: '50%', 
+              background: location.pathname === '/cart' ? 'var(--primary)' : 'var(--background)',
+              color: location.pathname === '/cart' ? 'white' : 'var(--text)',
+              border: '1px solid var(--border)'
+            }}
+          >
+            <ShoppingCart size={20} />
+            <AnimatePresence>
+              {totalItems > 0 && (
+                <motion.span 
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                  style={{
+                    position: 'absolute',
+                    top: '-2px',
+                    right: '-2px',
+                    background: 'var(--secondary)',
+                    color: 'white',
+                    borderRadius: '50%',
+                    width: '20px',
+                    height: '20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '0.7rem',
+                    fontWeight: 'bold',
+                    border: '2px solid var(--card)'
+                  }}
+                >
+                  {totalItems}
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </Link>
 
-        {/* Actions & Links Unified Bar (Center) */}
-        <div style={{ 
-          background: 'var(--card)', 
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          border: '1px solid var(--border)',
-          borderRadius: 'var(--radius-full)',
-          padding: '0.6rem 1rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem',
-          boxShadow: 'var(--shadow-lg)',
-          width: 'fit-content',
-          margin: '0 auto'
-        }}>
-          {/* Navigation Links */}
+          {/* Theme Toggle */}
+          <button 
+            onClick={() => setIsDark(!isDark)}
+            style={{ 
+              width: '42px',
+              height: '42px',
+              borderRadius: '50%', 
+              background: 'var(--background)', 
+              color: isDark ? '#FBBF24' : 'var(--text)',
+              border: '1px solid var(--border)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {isDark ? <Sun size={20} fill="currentColor" /> : <Moon size={20} />}
+          </button>
+
+          {/* Desktop Navigation Links */}
+          <div style={{ width: '1px', height: '24px', background: 'var(--border)', margin: '0 0.5rem' }} className="desktop-only" />
+          
           <nav style={{ display: 'flex', gap: '0.25rem' }} className="desktop-only">
             {navLinks.map((link) => (
               <Link 
@@ -68,8 +111,7 @@ export function Navbar({ totalItems }: { totalItems: number }) {
                   fontSize: '0.9rem',
                   color: location.pathname === link.path ? 'white' : 'var(--text)',
                   background: location.pathname === link.path ? 'var(--primary)' : 'transparent',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: location.pathname === link.path ? '0 4px 12px rgba(255,123,156,0.3)' : 'none',
+                  transition: 'all 0.3s ease',
                   whiteSpace: 'nowrap'
                 }}
               >
@@ -77,89 +119,60 @@ export function Navbar({ totalItems }: { totalItems: number }) {
               </Link>
             ))}
           </nav>
-
-          <div style={{ width: '1px', height: '20px', background: 'var(--border)' }} className="desktop-only" />
-
-          {/* Actions Section */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            <button 
-              onClick={() => setIsDark(!isDark)}
-              className="btn" 
-              style={{ 
-                width: '38px',
-                height: '38px',
-                borderRadius: '50%', 
-                background: 'var(--background)', 
-                color: isDark ? '#FBBF24' : 'var(--text)',
-                border: '1px solid var(--border)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 0
-              }}
-            >
-              {isDark ? <Sun size={18} fill="currentColor" /> : <Moon size={18} />}
-            </button>
-
-            <Link 
-              to="/cart" 
-              style={{ 
-                position: 'relative', 
-                width: '38px',
-                height: '38px',
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                borderRadius: '50%', 
-                background: location.pathname === '/cart' ? 'var(--primary)' : 'var(--background)',
-                color: location.pathname === '/cart' ? 'white' : 'var(--text)',
-                border: '1px solid var(--border)'
-              }}
-            >
-              <ShoppingCart size={18} />
-              <AnimatePresence>
-                {totalItems > 0 && (
-                  <motion.span 
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    style={{
-                      position: 'absolute',
-                      top: '-4px',
-                      right: '-4px',
-                      background: 'var(--secondary)',
-                      color: 'white',
-                      borderRadius: '50%',
-                      width: '18px',
-                      height: '18px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '0.65rem',
-                      fontWeight: 'bold',
-                      border: '2px solid var(--card)'
-                    }}
-                  >
-                    {totalItems}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </Link>
-          </div>
         </div>
 
-        {/* Logo Section (Right Side) */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.5rem 0.75rem', background: 'var(--card)', borderRadius: '1.25rem', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
-            <span className="logo-text logo-text-desktop" style={{ fontSize: '1.25rem', fontWeight: '900' }}>بيبي ستور</span>
-            <div className="logo-icon-wrapper" style={{ width: '40px', height: '40px', borderRadius: '12px' }}>
-              <Moon size={22} className="logo-icon-moon" />
+        {/* Logo Section (Right on RTL) */}
+        <div style={{ pointerEvents: 'auto' }}>
+          <Link to="/" className="navbar-logo" style={{ gap: '0.75rem', textDecoration: 'none' }}>
+            <span className="logo-text desktop-only" style={{ fontSize: '1.25rem', fontWeight: '900' }}>بيبي ستور</span>
+            <div className="logo-icon-wrapper" style={{ width: '42px', height: '42px', borderRadius: '12px' }}>
+              <Moon size={24} className="logo-icon-moon" />
               <div className="logo-icon-star" />
             </div>
           </Link>
         </div>
 
       </div>
+
+      {/* Mobile Bottom Navigation (Optional but good for mobile UX) */}
+      <nav className="mobile-only" style={{ 
+        position: 'fixed', 
+        bottom: '1rem', 
+        left: '50%', 
+        transform: 'translateX(-50%)',
+        background: 'var(--card)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        padding: '0.5rem',
+        borderRadius: 'var(--radius-full)',
+        border: '1px solid var(--border)',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+        zIndex: 1000,
+        gap: '0.5rem',
+        width: '90%',
+        maxWidth: '400px',
+        justifyContent: 'space-around'
+      }}>
+        {navLinks.map((link) => (
+          <Link 
+            key={link.path}
+            to={link.path}
+            style={{ 
+              padding: '0.6rem 1rem',
+              borderRadius: 'var(--radius-full)',
+              fontWeight: '700',
+              fontSize: '0.85rem',
+              color: location.pathname === link.path ? 'white' : 'var(--text)',
+              background: location.pathname === link.path ? 'var(--primary)' : 'transparent',
+              transition: 'all 0.3s ease',
+              textAlign: 'center',
+              flex: 1
+            }}
+          >
+            {link.name}
+          </Link>
+        ))}
+      </nav>
     </header>
   );
 }

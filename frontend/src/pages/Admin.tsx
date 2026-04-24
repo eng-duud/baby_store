@@ -79,7 +79,7 @@ export function Admin() {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setForm({ ...form, image: reader.result as string });
+      setForm(prev => ({ ...prev, image: reader.result as string }));
     };
     reader.readAsDataURL(file);
   };
@@ -88,7 +88,7 @@ export function Admin() {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onloadend = () => setBundleForm({ ...bundleForm, image: reader.result as string });
+    reader.onloadend = () => setBundleForm(prev => ({ ...prev, image: reader.result as string }));
     reader.readAsDataURL(file);
   };
 
@@ -164,12 +164,20 @@ export function Admin() {
     setForm(emptyForm);
   };
 
+  const normalizeArabicNumerals = (str: string) => {
+    return str.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString());
+  };
+
   const handleSubmitProduct = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.price || !form.category || !form.image) {
-      showError('يرجى ملء الحقول المطلوبة (الاسم، السعر، الفئة، والصورة).');
+    const normalizedPrice = normalizeArabicNumerals(form.price.toString());
+    const priceNum = parseFloat(normalizedPrice);
+    
+    if (!form.name || isNaN(priceNum) || !form.category || !form.image) {
+      showError('يرجى ملء الحقول المطلوبة بشكل صحيح (الاسم، السعر برقم، الفئة، والصورة).');
       return;
     }
+    
     setSubmitting(true);
     try {
       const url = editingId ? `${API_URL}/products/${editingId}` : `${API_URL}/products`;
@@ -178,16 +186,23 @@ export function Admin() {
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, price: parseFloat(form.price) })
+        body: JSON.stringify({ ...form, price: priceNum })
       });
+      
       const data = await res.json();
-      if (!data.success) throw new Error(data.error);
+      if (!res.ok || !data.success) throw new Error(data.error || 'حدث خطأ في الخادم');
+      
+      const isEditing = !!editingId;
+      const productName = data.product?.name || form.name;
       
       setForm(emptyForm);
       setEditingId(null);
-      showSuccess(editingId ? 'تم تحديث المنتج بنجاح!' : `تمت إضافة المنتج "${data.product.name}" بنجاح!`);
+      showSuccess(isEditing ? 'تم تحديث المنتج بنجاح!' : `تمت إضافة المنتج "${productName}" بنجاح!`);
       fetchAll();
-    } catch (err: any) { showError(err.message || 'فشلت العملية.'); }
+    } catch (err: any) { 
+      console.error('Product Submit Error:', err);
+      showError(err.message || 'فشلت العملية.'); 
+    }
     finally { setSubmitting(false); }
   };
 

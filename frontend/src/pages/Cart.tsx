@@ -114,7 +114,7 @@ export function Cart({
       <div className="container" style={{ padding: '6rem 1.5rem 2rem' }}>
         <h1 style={{ marginBottom: '3rem', fontSize: '2.5rem' }}>سلة التسوق</h1>
       
-      <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
+      <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
         {/* Cart Items */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {cart.map(item => (

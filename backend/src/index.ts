@@ -33,17 +33,17 @@ app.post('/api/products', async (req, res) => {
 
     const [newProduct] = await db.insert(products).values({
       name,
-      price: parseFloat(price),
-      image: image || 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=800&q=80', // default image
+      price: parseFloat(price.toString()),
+      image: image || 'https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&w=800&q=80',
       category,
       ageGroup: ageGroup || 'all',
       description: description || ''
     }).returning();
 
     res.json({ success: true, product: newProduct });
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to add product' });
+    res.status(500).json({ success: false, error: error.message || 'Failed to add product' });
   }
 });
 
@@ -262,7 +262,7 @@ app.put('/api/products/:id', async (req, res) => {
     
     await db.update(products).set({
       name,
-      price: parseFloat(price),
+      price: parseFloat(price.toString()),
       image,
       category,
       ageGroup,
@@ -270,9 +270,9 @@ app.put('/api/products/:id', async (req, res) => {
     }).where(eq(products.id, parseInt(id)));
 
     res.json({ success: true });
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to update product' });
+    res.status(500).json({ success: false, error: error.message || 'Failed to update product' });
   }
 });
 

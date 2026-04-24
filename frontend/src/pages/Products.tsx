@@ -59,7 +59,7 @@ export function Products({ addToCart }: { addToCart: ReturnType<typeof useCart>[
         </header>
 
         {/* Filter Tabs */}
-        <div className="tab-container" style={{ marginBottom: '4rem' }}>
+        <div className="tab-container" style={{ marginBottom: '3rem', maxWidth: '100%', overflowX: 'auto', padding: '0.5rem', WebkitOverflowScrolling: 'touch' }}>
           {Object.keys(AGE_LABELS).map(age => (
             <button
               key={age}
@@ -77,7 +77,7 @@ export function Products({ addToCart }: { addToCart: ReturnType<typeof useCart>[
           <motion.div 
             layout
             className="grid" 
-            style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '2rem' }}
+            style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1.5rem' }}
           >
             <AnimatePresence mode="popLayout">
               {filteredProducts.map(product => (
