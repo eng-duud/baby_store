@@ -56,7 +56,7 @@ export function Navbar({ totalItems }: { totalItems: number }) {
             }}>
               <Moon size={22} className="logo-icon-moon" />
             </div>
-            <span className="gradient-text desktop-only" style={{ fontSize: '1.5rem', fontWeight: '900' }}>بيبي ستور</span>
+            <span className="gradient-text" style={{ fontSize: '1.2rem', fontWeight: '900' }}>بيبي ستور</span>
           </Link>
 
           {/* Center: Desktop Nav */}
@@ -85,7 +85,15 @@ export function Navbar({ totalItems }: { totalItems: number }) {
             <button 
               onClick={() => setIsDark(!isDark)}
               className="btn-outline"
-              style={{ width: '40px', height: '40px', padding: 0, borderRadius: '50%' }}
+              style={{ 
+                width: '40px', 
+                height: '40px', 
+                padding: 0, 
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
             >
               {isDark ? <Sun size={20} fill="currentColor" className="text-accent" /> : <Moon size={20} />}
             </button>
@@ -99,6 +107,9 @@ export function Navbar({ totalItems }: { totalItems: number }) {
                 height: '40px', 
                 padding: 0, 
                 borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 background: location.pathname === '/cart' ? 'var(--primary)' : 'var(--card)',
                 color: location.pathname === '/cart' ? 'white' : 'var(--text)',
                 border: location.pathname === '/cart' ? 'none' : '1px solid var(--border)',
