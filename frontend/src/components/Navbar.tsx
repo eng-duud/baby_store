@@ -147,6 +147,51 @@ export function Navbar({ totalItems }: { totalItems: number }) {
             </Link>
           </div>
         </div>
+        
+        {/* Mobile Navigation Bar */}
+        <div className="mobile-only" style={{ borderTop: '1px solid var(--border)', marginTop: '0.5rem', background: 'var(--card)' }}>
+          <nav className="container" style={{ 
+            display: 'flex', 
+            overflowX: 'auto', 
+            gap: '1.25rem', 
+            padding: '0.8rem var(--space-sm)',
+            scrollbarWidth: 'none',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            {navLinks.map((link) => (
+              <Link 
+                key={link.path}
+                to={link.path}
+                style={{ 
+                  color: location.pathname === link.path ? 'var(--primary)' : 'var(--text-muted)',
+                  fontSize: '0.95rem',
+                  fontWeight: '800',
+                  whiteSpace: 'nowrap',
+                  transition: 'all 0.3s ease',
+                  position: 'relative',
+                  paddingBottom: '4px'
+                }}
+              >
+                {link.name}
+                {location.pathname === link.path && (
+                  <motion.div 
+                    layoutId="activeTab"
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: '3px',
+                      background: 'var(--primary)',
+                      borderRadius: 'var(--radius-full)'
+                    }}
+                  />
+                )}
+              </Link>
+            ))}
+          </nav>
+        </div>
       </header>
 
     </>
