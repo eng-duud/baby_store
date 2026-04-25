@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { MessageCircle, HelpCircle, ShoppingBag, Truck, CreditCard, ChevronLeft } from 'lucide-react';
+import { MessageCircle, HelpCircle, ShoppingBag, Truck, CreditCard } from 'lucide-react';
 
 const STORE_PHONE = '967776626456';
 
@@ -18,33 +18,33 @@ export function Contact() {
     {
       icon: <CreditCard size={24} />,
       title: 'تأكيد الطلب',
-      description: 'قومي بتعبئة بيانات التوصيل (الاسم، العنوان، الهاتف) ثم النقر على "إتمام الطلب عبر واتساب".'
+      description: 'قومي بتعبئة بيانات التوصيل ثم النقر على "إتمام الطلب عبر واتساب".'
     },
     {
       icon: <Truck size={24} />,
       title: 'التوصيل',
-      description: 'بعد إرسال الرسالة للواتساب، سنتواصل معكِ لتأكيد الموعد وتوصيل طلبك لباب البيت.'
+      description: 'سنتواصل معكِ لتأكيد الموعد وتوصيل طلبك لباب البيت بكل حب.'
     }
   ];
 
   return (
-    <div className="page-transition" style={{ padding: '6rem 0' }}>
+    <div className="page-transition section">
       <div className="container">
-        <header style={{ textAlign: 'center', marginBottom: '5rem' }}>
-          <h1 style={{ fontSize: '3.5rem', marginBottom: '1.5rem' }}>تواصل معنا</h1>
-          <p className="text-muted" style={{ fontSize: '1.25rem', maxWidth: '600px', margin: '0 auto' }}>
+        <header style={{ textAlign: 'center', marginBottom: 'var(--space-xl)' }}>
+          <h1 className="gradient-text" style={{ marginBottom: '1rem' }}>تواصل معنا</h1>
+          <p className="text-muted" style={{ maxWidth: '600px', margin: '0 auto' }}>
             نحن هنا لمساعدتكِ! إذا كان لديكِ أي استفسار أو ترغبين في طلب خاص، لا تترددي في مراسلتنا.
           </p>
         </header>
 
-        <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: '4rem', alignItems: 'flex-start' }}>
           {/* User Guide */}
           <div>
-            <h2 style={{ marginBottom: '2.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ padding: '0.5rem', background: 'var(--primary-light)', borderRadius: '1rem', color: 'var(--primary)' }}>
+            <h2 style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ padding: '0.5rem', background: 'var(--primary-light)', borderRadius: '1rem', color: 'var(--primary)', display: 'flex' }}>
                 <HelpCircle size={24} />
               </div>
-              دليل الاستخدام (كيفية الطلب)
+              دليل الطلب السهل
             </h2>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -54,6 +54,7 @@ export function Contact() {
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
                   style={{ display: 'flex', gap: '1.5rem' }}
                 >
                   <div style={{ 
@@ -71,16 +72,16 @@ export function Contact() {
                     {step.icon}
                   </div>
                   <div>
-                    <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>{step.title}</h3>
-                    <p className="text-muted">{step.description}</p>
+                    <h3 style={{ fontSize: '1.2rem', marginBottom: '0.4rem' }}>{step.title}</h3>
+                    <p className="text-muted" style={{ fontSize: '0.95rem' }}>{step.description}</p>
                   </div>
                 </motion.div>
               ))}
             </div>
           </div>
 
-          {/* Contact Methods */}
-          <div style={{ background: 'var(--card)', padding: '3rem', borderRadius: '3rem', border: '1px solid var(--border)', height: 'fit-content', boxShadow: 'var(--shadow-lg)' }}>
+          {/* Contact Card */}
+          <div className="card" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)' }}>
             <h2 style={{ marginBottom: '1.5rem' }}>ابدأ المحادثة الآن</h2>
             <p className="text-muted" style={{ marginBottom: '2.5rem' }}>
               انقر على الزر أدناه ليتم تحويلك مباشرة إلى الواتساب الخاص بنا. سنرد على جميع استفساراتكِ في أسرع وقت.
@@ -90,25 +91,33 @@ export function Contact() {
               href={`https://wa.me/${STORE_PHONE}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn"
+              className="btn btn-primary"
               style={{ 
                 width: '100%', 
-                padding: '1.5rem', 
+                padding: '1.25rem', 
                 background: '#25D366', 
                 color: 'white', 
-                fontSize: '1.4rem', 
+                fontSize: '1.25rem', 
                 gap: '1rem',
-                boxShadow: '0 10px 20px rgba(37, 211, 102, 0.3)',
-                borderRadius: '2rem'
+                boxShadow: '0 10px 20px rgba(37, 211, 102, 0.2)',
+                border: 'none'
               }}
             >
-              <MessageCircle size={32} />
+              <MessageCircle size={28} />
               تحدثي معنا عبر واتساب
             </a>
 
-            <div style={{ marginTop: '3rem', borderTop: '1px solid var(--border)', paddingTop: '2rem' }}>
-              <h4 style={{ marginBottom: '1rem' }}>ساعات العمل:</h4>
-              <p className="text-muted">يومياً من الساعة 9:00 صباحاً حتى 10:00 مساءً</p>
+            <div style={{ marginTop: '2.5rem', borderTop: '1px solid var(--border)', paddingTop: '2rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+                <div>
+                  <h4 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>ساعات العمل</h4>
+                  <div style={{ fontWeight: '700' }}>9:00 ص - 10:00 م</div>
+                </div>
+                <div>
+                  <h4 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.25rem' }}>موقعنا</h4>
+                  <div style={{ fontWeight: '700' }}>اليمن - صنعاء</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -116,3 +125,4 @@ export function Contact() {
     </div>
   );
 }
+

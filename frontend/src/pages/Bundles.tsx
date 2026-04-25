@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ShoppingCart, Star, Zap, Heart } from 'lucide-react';
+import { ShoppingCart, Star, Zap, Heart, ArrowLeft } from 'lucide-react';
 import { useCart } from '../store/cartStore';
 import { API_URL } from '../config';
 
@@ -26,11 +26,11 @@ export function Bundles({ addToCart }: { addToCart: ReturnType<typeof useCart>['
 
   if (loading) {
     return (
-      <div className="container" style={{ padding: '8rem 1.5rem', textAlign: 'center' }}>
-        <div className="skeleton" style={{ width: '100%', height: '400px', borderRadius: 'var(--radius-lg)', marginBottom: '2rem' }} />
-        <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '2rem' }}>
-          {[1,2,3].map(i => (
-            <div key={i} className="skeleton" style={{ height: '450px', borderRadius: '2.5rem' }} />
+      <div className="container" style={{ padding: 'var(--space-xxl) var(--space-md)', textAlign: 'center' }}>
+        <div className="skeleton" style={{ width: '250px', height: '40px', margin: '0 auto 3rem', borderRadius: 'var(--radius-md)' }} />
+        <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: '2rem' }}>
+          {[1,2,3,4].map(i => (
+            <div key={i} className="skeleton" style={{ height: '450px', borderRadius: 'var(--radius-lg)' }} />
           ))}
         </div>
       </div>
@@ -38,57 +38,65 @@ export function Bundles({ addToCart }: { addToCart: ReturnType<typeof useCart>['
   }
 
   return (
-    <div className="page-transition" style={{ padding: '6rem 0' }}>
+    <div className="page-transition section">
       <div className="container">
-        <header style={{ textAlign: 'center', marginBottom: '5rem' }}>
-          <div className="category-chip" style={{ background: 'var(--secondary-light)', color: 'var(--secondary)', marginBottom: '1.5rem', padding: '0.6rem 1.5rem' }}>
-            <Zap size={20} />
+        <header style={{ textAlign: 'center', marginBottom: 'var(--space-xl)' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'var(--secondary-light)', color: 'var(--secondary)', padding: '0.5rem 1.25rem', borderRadius: 'var(--radius-full)', marginBottom: '1.5rem', fontWeight: '800', fontSize: '0.9rem' }}>
+            <Zap size={18} />
             باقات توفير حصرية
           </div>
-          <h1 style={{ fontSize: '3.5rem', marginBottom: '1.5rem' }}>باقاتنا المتكاملة</h1>
-          <p className="text-muted" style={{ fontSize: '1.25rem', maxWidth: '700px', margin: '0 auto' }}>
+          <h1 className="gradient-text" style={{ marginBottom: '1.5rem' }}>باقاتنا المتكاملة</h1>
+          <p className="text-muted" style={{ maxWidth: '700px', margin: '0 auto' }}>
             نوفر لكِ الجهد والمال مع باقاتنا المختارة بعناية لتشمل كل ما يحتاجه صغيرك في حقيبة واحدة.
           </p>
         </header>
 
-        <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '2rem' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: '2rem' }}>
           {bundles.map(bundle => (
             <motion.div 
               key={bundle.id} 
               className="card"
-              whileHover={{ y: -15, boxShadow: '0 30px 60px -12px rgba(0, 0, 0, 0.18)' }}
-              style={{ border: '1px solid var(--border)', background: 'var(--card)', padding: '1.25rem', borderRadius: '3rem' }}
+              whileHover={{ y: -10 }}
+              style={{ borderRadius: 'var(--radius-lg)', display: 'flex', flexDirection: 'column' }}
             >
-              <Link to={`/bundle/${bundle.id}`} style={{ display: 'block', position: 'relative', borderRadius: '2.2rem', overflow: 'hidden' }}>
-                <img 
-                  src={bundle.image} 
-                  alt={bundle.name} 
-                  style={{ width: '100%', height: '350px', objectFit: 'cover' }} 
-                />
-                <div style={{ position: 'absolute', top: '1.5rem', left: '1.5rem', right: '1.5rem', display: 'flex', justifyContent: 'space-between' }}>
-                  <span className="category-chip" style={{ background: 'var(--primary)', color: 'white', border: 'none', padding: '0.5rem 1.2rem' }}>
-                    <Star size={16} fill="currentColor" />
-                    عرض خاص
-                  </span>
-                </div>
-              </Link>
-              <div style={{ padding: '2.5rem 1.5rem 1rem' }}>
-                <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem' }}>{bundle.name}</h3>
-                <p className="text-muted" style={{ marginBottom: '2.5rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
-                  {bundle.description}
-                </p>
-                <div className="flex justify-between items-center" style={{ background: 'var(--background)', padding: '1.25rem', borderRadius: '2rem' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)', fontWeight: '600' }}>سعر الباقة</span>
-                    <span style={{ fontWeight: '900', color: 'var(--primary)', fontSize: '2rem' }}>{bundle.price} <small style={{ fontSize: '1rem' }}>ر.ي</small></span>
+              <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 0 }}>
+                <div style={{ height: '350px', position: 'relative' }}>
+                  <img 
+                    src={bundle.image} 
+                    alt={bundle.name} 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                  />
+                  <div style={{ position: 'absolute', top: '1.25rem', right: '1.25rem' }}>
+                    <span style={{ background: 'var(--primary)', color: 'white', padding: '0.4rem 1rem', borderRadius: 'var(--radius-full)', fontSize: '0.8rem', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                      <Star size={14} fill="currentColor" />
+                      باقة مميزة
+                    </span>
                   </div>
-                  <button 
-                    className="btn btn-primary" 
-                    style={{ width: '70px', height: '70px', borderRadius: '1.5rem' }}
-                    onClick={() => addToCart({ type: 'bundle', dbId: bundle.id, name: bundle.name, price: Number(bundle.price), image: bundle.image })}
-                  >
-                    <ShoppingCart size={28} />
-                  </button>
+                </div>
+                <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column' }}>
+                  <h3 style={{ marginBottom: '1rem' }}>{bundle.name}</h3>
+                  <p className="text-muted" style={{ marginBottom: '2rem', fontSize: '0.95rem', flex: 1 }}>
+                    {bundle.description}
+                  </p>
+                  
+                  <div style={{ background: 'var(--background)', padding: '1.5rem', borderRadius: 'var(--radius-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <div className="text-muted" style={{ fontSize: '0.75rem', fontWeight: '700', marginBottom: '0.25rem' }}>سعر الباقة</div>
+                      <div className="price-tag">{bundle.price} <small style={{ fontSize: '0.8rem' }}>ر.ي</small></div>
+                    </div>
+                    <div style={{ display: 'flex', gap: '0.75rem' }}>
+                      <Link to={`/bundle/${bundle.id}`} className="btn btn-outline" style={{ width: '42px', height: '42px', padding: 0, borderRadius: '12px' }}>
+                        <ArrowLeft size={20} />
+                      </Link>
+                      <button 
+                        className="btn btn-primary" 
+                        style={{ width: '42px', height: '42px', padding: 0, borderRadius: '12px' }}
+                        onClick={() => addToCart({ type: 'bundle', dbId: bundle.id, name: bundle.name, price: Number(bundle.price), image: bundle.image })}
+                      >
+                        <ShoppingCart size={20} />
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -96,11 +104,12 @@ export function Bundles({ addToCart }: { addToCart: ReturnType<typeof useCart>['
         </div>
 
         {bundles.length === 0 && (
-          <div style={{ textAlign: 'center', padding: '8rem 2rem' }}>
-            <h2 className="text-muted">لا توجد باقات متوفرة حالياً.</h2>
+          <div style={{ textAlign: 'center', padding: 'var(--space-xxl) 0' }}>
+            <h3 className="text-muted">لا توجد باقات متوفرة حالياً.</h3>
           </div>
         )}
       </div>
     </div>
   );
 }
+

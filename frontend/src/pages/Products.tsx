@@ -29,7 +29,7 @@ export function Products({ addToCart }: { addToCart: ReturnType<typeof useCart>[
     : products.filter(p => p.ageGroup === selectedAge);
 
   const AGE_LABELS: Record<string, string> = {
-    'all': 'كل المنتجات',
+    'all': 'الكل',
     '0-6 months': '0-6 أشهر',
     '6-12 months': '6-12 أشهر',
     '1-2 years': '1-2 سنوات'
@@ -37,11 +37,11 @@ export function Products({ addToCart }: { addToCart: ReturnType<typeof useCart>[
 
   if (loading) {
     return (
-      <div className="container" style={{ padding: '8rem 1.5rem', textAlign: 'center' }}>
+      <div className="container" style={{ padding: 'var(--space-xxl) var(--space-md)', textAlign: 'center' }}>
         <div className="skeleton" style={{ width: '200px', height: '40px', margin: '0 auto 2rem', borderRadius: 'var(--radius-md)' }} />
-        <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '2rem' }}>
-          {[1,2,3,4,5,6].map(i => (
-            <div key={i} className="skeleton" style={{ height: '350px', borderRadius: 'var(--radius-lg)' }} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" style={{ gap: '1.5rem' }}>
+          {[1,2,3,4,5,6,7,8].map(i => (
+            <div key={i} className="skeleton" style={{ height: '380px', borderRadius: 'var(--radius-md)' }} />
           ))}
         </div>
       </div>
@@ -49,23 +49,22 @@ export function Products({ addToCart }: { addToCart: ReturnType<typeof useCart>[
   }
 
   return (
-    <div className="page-transition" style={{ padding: '6rem 0' }}>
+    <div className="page-transition section">
       <div className="container">
-        <header style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <h1 style={{ fontSize: '3rem', marginBottom: '1.5rem' }}>منتجاتنا المختارة</h1>
-          <p className="text-muted" style={{ fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto' }}>
+        <header style={{ textAlign: 'center', marginBottom: 'var(--space-xl)' }}>
+          <h1 className="gradient-text" style={{ marginBottom: '1rem' }}>منتجاتنا المختارة</h1>
+          <p className="text-muted" style={{ maxWidth: '600px', margin: '0 auto' }}>
             تصفحي مجموعتنا الواسعة من مستلزمات الأطفال بجودة عالية وأسعار منافسة.
           </p>
         </header>
 
         {/* Filter Tabs */}
-        <div className="tab-container" style={{ marginBottom: '3rem', maxWidth: '100%', overflowX: 'auto', padding: '0.5rem', WebkitOverflowScrolling: 'touch' }}>
+        <div className="tab-container">
           {Object.keys(AGE_LABELS).map(age => (
             <button
               key={age}
               onClick={() => setSelectedAge(age)}
               className={`tab-item ${selectedAge === age ? 'active' : ''}`}
-              style={{ padding: '0.8rem 2rem', fontSize: '1.1rem' }}
             >
               {AGE_LABELS[age]}
             </button>
@@ -76,48 +75,45 @@ export function Products({ addToCart }: { addToCart: ReturnType<typeof useCart>[
         <div style={{ minHeight: '400px' }}>
           <motion.div 
             layout
-            className="grid" 
-            style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1.5rem' }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
+            style={{ gap: '1.5rem' }}
           >
             <AnimatePresence mode="popLayout">
               {filteredProducts.map(product => (
                 <motion.div 
                   key={product.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
-                  className="card"
-                  style={{ position: 'relative' }}
+                  className="card product-card"
                 >
-                  <div style={{ height: '260px', overflow: 'hidden', position: 'relative' }}>
-                    <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    <button 
-                      style={{ position: 'absolute', top: '1rem', left: '1rem', background: 'rgba(255,255,255,0.8)', padding: '0.5rem', borderRadius: '50%', color: 'var(--text-muted)' }}
-                    >
-                      <Heart size={18} />
-                    </button>
-                  </div>
-                  <div style={{ padding: '1.5rem' }}>
-                    <div style={{ marginBottom: '0.5rem' }}>
-                      <span className="category-chip" style={{ fontSize: '0.75rem' }}>
+                  <div className="product-image-wrapper">
+                    <img src={product.image} alt={product.name} className="product-image" />
+                    <div style={{ position: 'absolute', top: '0.75rem', right: '0.75rem' }}>
+                      <span style={{ background: 'white', color: 'var(--text)', padding: '0.3rem 0.75rem', borderRadius: 'var(--radius-full)', fontSize: '0.75rem', fontWeight: '800', boxShadow: 'var(--shadow-sm)' }}>
                         {product.category}
                       </span>
                     </div>
-                    <h3 style={{ fontSize: '1.2rem', marginBottom: '1rem', height: '1.4em', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+                  </div>
+                  <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', fontWeight: '700' }}>
                       {product.name}
                     </h3>
-                    <div className="flex justify-between items-center">
-                      <span style={{ fontWeight: '900', fontSize: '1.4rem', color: 'var(--primary)' }}>
-                        {product.price} <small style={{ fontSize: '0.8rem' }}>ر.ي</small>
-                      </span>
+                    <div className="text-muted" style={{ fontSize: '0.85rem', marginBottom: '1.5rem', flex: 1 }}>
+                      {product.ageGroup ? `عمر ${AGE_LABELS[product.ageGroup]}` : ''}
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div className="price-tag">
+                        {product.price} <small style={{ fontSize: '0.7rem', verticalAlign: 'middle', fontWeight: '700' }}>ر.ي</small>
+                      </div>
                       <button 
                         className="btn btn-primary" 
-                        style={{ padding: '0.6rem', borderRadius: '1rem' }}
+                        style={{ width: '42px', height: '42px', padding: 0, borderRadius: '12px' }}
                         onClick={() => addToCart({ type: 'product', dbId: product.id, name: product.name, price: Number(product.price), image: product.image })}
                       >
-                        <Plus size={24} />
+                        <Plus size={22} />
                       </button>
                     </div>
                   </div>
@@ -131,12 +127,12 @@ export function Products({ addToCart }: { addToCart: ReturnType<typeof useCart>[
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                style={{ textAlign: 'center', padding: '6rem 2rem' }}
+                style={{ textAlign: 'center', padding: 'var(--space-xxl) 0' }}
               >
-                <div style={{ background: 'var(--border)', width: '100px', height: '100px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 2rem', color: 'var(--text-muted)' }}>
-                  <Package size={50} />
+                <div style={{ background: 'var(--border)', width: '80px', height: '80px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem', color: 'var(--text-muted)' }}>
+                  <Package size={40} />
                 </div>
-                <h2 className="text-muted">لا توجد منتجات حالياً</h2>
+                <h3>لا توجد منتجات حالياً</h3>
                 <p className="text-muted">نعمل على توفير المزيد من المنتجات الرائعة لكِ.</p>
               </motion.div>
             )}
@@ -146,3 +142,4 @@ export function Products({ addToCart }: { addToCart: ReturnType<typeof useCart>[
     </div>
   );
 }
+
