@@ -24,13 +24,7 @@ export function Footer() {
             <p style={{ color: 'var(--text-muted)', lineHeight: '1.8', fontSize: '0.95rem' }}>
               وجهتكم الأولى لكل ما يحتاجه طفلكم من ملابس، مستلزمات، وألعاب بجودة عالية وأسعار منافسة. نحن هنا لنهتم بكل تفاصيل راحة طفلكم.
             </p>
-            <div className="flex" style={{ gap: '1rem', marginTop: '1.5rem' }}>
-              {[Instagram, Facebook, Twitter].map((Icon, idx) => (
-                <a key={idx} href="#" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = 'var(--primary)'} onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}>
-                  <Icon size={20} />
-                </a>
-              ))}
-            </div>
+
           </div>
 
           {/* Quick Links */}
@@ -69,6 +63,19 @@ export function Footer() {
             </ul>
           </div>
 
+        </div>
+        
+        {/* Distributed Social Media Icons */}
+        <div className="social-distributor">
+          <a href="#" className="social-link-fancy" title="فيسبوك">
+            <Facebook size={24} />
+          </a>
+          <a href="#" className="social-link-fancy" title="انستجرام">
+            <Instagram size={24} />
+          </a>
+          <a href="#" className="social-link-fancy" title="تويتر">
+            <Twitter size={24} />
+          </a>
         </div>
 
         {/* Bottom Bar */}

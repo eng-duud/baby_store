@@ -138,27 +138,6 @@ export function Navbar({ totalItems }: { totalItems: number }) {
         </div>
       </header>
 
-      {/* Mobile Bottom Navigation */}
-      <nav className="mobile-nav mobile-only">
-        {navLinks.map((link) => (
-          <Link 
-            key={link.path}
-            to={link.path}
-            className={`mobile-nav-item ${location.pathname === link.path ? 'active' : ''}`}
-          >
-            <motion.div
-              whileTap={{ scale: 0.9 }}
-              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.2rem' }}
-            >
-              {link.icon}
-              <span>{link.name}</span>
-            </motion.div>
-          </Link>
-        ))}
-      </nav>
-      
-      {/* Spacer for fixed bottom nav on mobile */}
-      <div className="mobile-only" style={{ height: '70px' }} />
     </>
   );
 }
