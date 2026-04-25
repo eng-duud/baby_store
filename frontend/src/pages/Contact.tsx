@@ -31,18 +31,18 @@ export function Contact() {
     <div className="page-transition section">
       <div className="container">
         <header style={{ textAlign: 'center', marginBottom: 'var(--space-xl)' }}>
-          <h1 className="gradient-text" style={{ marginBottom: '1rem' }}>تواصل معنا</h1>
+          <h1 className="gradient-text" style={{ marginBottom: '1rem', fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>تواصل معنا</h1>
           <p className="text-muted" style={{ maxWidth: '600px', margin: '0 auto' }}>
             نحن هنا لمساعدتكِ! إذا كان لديكِ أي استفسار أو ترغبين في طلب خاص، لا تترددي في مراسلتنا.
           </p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: '4rem', alignItems: 'flex-start' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: 'clamp(2rem, 5vw, 4rem)', alignItems: 'flex-start' }}>
           {/* User Guide */}
           <div>
-            <h2 style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ padding: '0.5rem', background: 'var(--primary-light)', borderRadius: '1rem', color: 'var(--primary)', display: 'flex' }}>
-                <HelpCircle size={24} />
+            <h2 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: 'clamp(1.4rem, 4vw, 2rem)' }}>
+              <div style={{ padding: '0.4rem', background: 'var(--primary-light)', borderRadius: '0.75rem', color: 'var(--primary)', display: 'flex' }}>
+                <HelpCircle size={20} />
               </div>
               دليل الطلب السهل
             </h2>
@@ -81,8 +81,8 @@ export function Contact() {
           </div>
 
           {/* Contact Card */}
-          <div className="card" style={{ padding: '2.5rem', borderRadius: 'var(--radius-lg)' }}>
-            <h2 style={{ marginBottom: '1.5rem' }}>ابدأ المحادثة الآن</h2>
+          <div className="card" style={{ padding: 'clamp(1.5rem, 5vw, 2.5rem)', borderRadius: 'var(--radius-lg)' }}>
+            <h2 style={{ marginBottom: '1rem', fontSize: 'clamp(1.3rem, 4vw, 1.8rem)' }}>ابدأ المحادثة الآن</h2>
             <p className="text-muted" style={{ marginBottom: '2.5rem' }}>
               انقر على الزر أدناه ليتم تحويلك مباشرة إلى الواتساب الخاص بنا. سنرد على جميع استفساراتكِ في أسرع وقت.
             </p>
@@ -94,16 +94,16 @@ export function Contact() {
               className="btn btn-primary"
               style={{ 
                 width: '100%', 
-                padding: '1.25rem', 
+                padding: '1rem', 
                 background: '#25D366', 
                 color: 'white', 
-                fontSize: '1.25rem', 
-                gap: '1rem',
+                fontSize: 'clamp(1rem, 3vw, 1.25rem)', 
+                gap: '0.75rem',
                 boxShadow: '0 10px 20px rgba(37, 211, 102, 0.2)',
                 border: 'none'
               }}
             >
-              <MessageCircle size={28} />
+              <MessageCircle size={24} />
               تحدثي معنا عبر واتساب
             </a>
 
