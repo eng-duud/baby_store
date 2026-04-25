@@ -37,12 +37,12 @@ export function Contact() {
           </p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: 'clamp(2rem, 5vw, 4rem)', alignItems: 'flex-start' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: '3rem', alignItems: 'flex-start' }}>
           {/* User Guide */}
           <div>
-            <h2 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: 'clamp(1.4rem, 4vw, 2rem)' }}>
+            <h2 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.4rem' }}>
               <div style={{ padding: '0.4rem', background: 'var(--primary-light)', borderRadius: '0.75rem', color: 'var(--primary)', display: 'flex' }}>
-                <HelpCircle size={20} />
+                <HelpCircle size={22} />
               </div>
               دليل الطلب السهل
             </h2>
@@ -72,8 +72,8 @@ export function Contact() {
                     {step.icon}
                   </div>
                   <div>
-                    <h3 style={{ fontSize: '1.2rem', marginBottom: '0.4rem' }}>{step.title}</h3>
-                    <p className="text-muted" style={{ fontSize: '0.95rem' }}>{step.description}</p>
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '0.3rem', fontWeight: '800' }}>{step.title}</h3>
+                    <p className="text-muted" style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>{step.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -81,8 +81,8 @@ export function Contact() {
           </div>
 
           {/* Contact Card */}
-          <div className="card" style={{ padding: 'clamp(1.5rem, 5vw, 2.5rem)', borderRadius: 'var(--radius-lg)' }}>
-            <h2 style={{ marginBottom: '1rem', fontSize: 'clamp(1.3rem, 4vw, 1.8rem)' }}>ابدأ المحادثة الآن</h2>
+          <div className="card" style={{ padding: '1.5rem', borderRadius: 'var(--radius-lg)' }}>
+            <h2 style={{ marginBottom: '1rem', fontSize: '1.3rem' }}>ابدأ المحادثة الآن</h2>
             <p className="text-muted" style={{ marginBottom: '2.5rem' }}>
               انقر على الزر أدناه ليتم تحويلك مباشرة إلى الواتساب الخاص بنا. سنرد على جميع استفساراتكِ في أسرع وقت.
             </p>
