@@ -1,8 +1,8 @@
-import { sqliteTable, integer, text, real } from 'drizzle-orm/sqlite-core';
+import { pgTable, serial, integer, text, real } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
-export const products = sqliteTable('products', {
-  id: integer('id').primaryKey({ autoIncrement: true }),
+export const products = pgTable('products', {
+  id: serial('id').primaryKey(),
   name: text('name').notNull(),
   price: real('price').notNull(),
   image: text('image').notNull(),
@@ -11,16 +11,16 @@ export const products = sqliteTable('products', {
   description: text('description'),
 });
 
-export const bundles = sqliteTable('bundles', {
-  id: integer('id').primaryKey({ autoIncrement: true }),
+export const bundles = pgTable('bundles', {
+  id: serial('id').primaryKey(),
   name: text('name').notNull(),
   description: text('description'),
   price: real('price').notNull(),
   image: text('image').notNull(),
 });
 
-export const bundleItems = sqliteTable('bundle_items', {
-  id: integer('id').primaryKey({ autoIncrement: true }),
+export const bundleItems = pgTable('bundle_items', {
+  id: serial('id').primaryKey(),
   bundleId: integer('bundle_id').notNull(),
   productId: integer('product_id').notNull(),
   quantity: integer('quantity').notNull().default(1),
@@ -41,8 +41,8 @@ export const bundlesRelations = relations(bundles, ({ many }) => ({
   items: many(bundleItems),
 }));
 
-export const orders = sqliteTable('orders', {
-  id: integer('id').primaryKey({ autoIncrement: true }),
+export const orders = pgTable('orders', {
+  id: serial('id').primaryKey(),
   customerName: text('customer_name').notNull(),
   phone: text('phone').notNull(),
   address: text('address').notNull(),
@@ -51,8 +51,8 @@ export const orders = sqliteTable('orders', {
   createdAt: text('created_at').default('CURRENT_TIMESTAMP'),
 });
 
-export const orderItems = sqliteTable('order_items', {
-  id: integer('id').primaryKey({ autoIncrement: true }),
+export const orderItems = pgTable('order_items', {
+  id: serial('id').primaryKey(),
   orderId: integer('order_id').notNull(),
   productId: integer('product_id'),
   bundleId: integer('bundle_id'),

@@ -37,6 +37,9 @@ export function Admin() {
   const [bundleSubmitting, setBundleSubmitting] = useState(false);
   const [editingBundleId, setEditingBundleId] = useState<number | null>(null);
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [bundleSelectedFile, setBundleSelectedFile] = useState<File | null>(null);
+
   useEffect(() => { fetchAll(); }, []);
 
   const fetchAll = async () => {
@@ -68,6 +71,7 @@ export function Admin() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setSelectedFile(file);
     const reader = new FileReader();
     reader.onloadend = () => setForm(prev => ({ ...prev, image: reader.result as string }));
     reader.readAsDataURL(file);
@@ -76,6 +80,7 @@ export function Admin() {
   const handleBundleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setBundleSelectedFile(file);
     const reader = new FileReader();
     reader.onloadend = () => setBundleForm(prev => ({ ...prev, image: reader.result as string }));
     reader.readAsDataURL(file);
@@ -95,22 +100,40 @@ export function Admin() {
 
   const handleSubmitBundle = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!bundleForm.name || !bundleForm.price || !bundleForm.image || bundleForm.items.length === 0) {
+    if (!bundleForm.name || !bundleForm.price || (!bundleForm.image && !bundleSelectedFile) || bundleForm.items.length === 0) {
       showError('يرجى ملء كافة الحقول واختيار منتج واحد على الأقل.');
       return;
     }
     setBundleSubmitting(true);
     try {
+      let imageUrl = bundleForm.image;
+      
+      if (bundleSelectedFile) {
+        const formData = new FormData();
+        formData.append('file', bundleSelectedFile);
+        formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'babys_preset');
+        
+        const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'your_cloud_name';
+        const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, { 
+          method: 'POST', 
+          body: formData 
+        });
+        const uploadData = await uploadRes.json();
+        if (!uploadRes.ok) throw new Error(uploadData.error?.message || 'فشل رفع الصورة');
+        imageUrl = uploadData.secure_url;
+      }
+
       const url = editingBundleId ? `${API_URL}/bundles/${editingBundleId}` : `${API_URL}/bundles`;
       const method = editingBundleId ? 'PUT' : 'POST';
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...bundleForm, price: parseFloat(bundleForm.price) })
+        body: JSON.stringify({ ...bundleForm, image: imageUrl, price: parseFloat(bundleForm.price) })
       });
       const data = await res.json();
       if (!data.success) throw new Error(data.error);
       setBundleForm({ name: '', price: '', image: '', description: '', items: [] });
+      setBundleSelectedFile(null);
       setEditingBundleId(null);
       showSuccess(editingBundleId ? 'تم تحديث الباقة بنجاح!' : 'تمت إضافة الباقة بنجاح!');
       fetchAll();
@@ -134,22 +157,40 @@ export function Admin() {
   const handleSubmitProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     const priceNum = parseFloat(form.price.toString());
-    if (!form.name || isNaN(priceNum) || !form.category || !form.image) {
+    if (!form.name || isNaN(priceNum) || !form.category || (!form.image && !selectedFile)) {
       showError('يرجى ملء الحقول المطلوبة بشكل صحيح.');
       return;
     }
     setSubmitting(true);
     try {
+      let imageUrl = form.image;
+      
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'babys_preset');
+        
+        const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'your_cloud_name';
+        const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, { 
+          method: 'POST', 
+          body: formData 
+        });
+        const uploadData = await uploadRes.json();
+        if (!uploadRes.ok) throw new Error(uploadData.error?.message || 'فشل رفع الصورة');
+        imageUrl = uploadData.secure_url;
+      }
+
       const url = editingId ? `${API_URL}/products/${editingId}` : `${API_URL}/products`;
       const method = editingId ? 'PUT' : 'POST';
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, price: priceNum })
+        body: JSON.stringify({ ...form, price: priceNum, image: imageUrl })
       });
       const data = await res.json();
       if (!res.ok || !data.success) throw new Error(data.error);
       setForm(emptyForm);
+      setSelectedFile(null);
       setEditingId(null);
       showSuccess(editingId ? 'تم تحديث المنتج بنجاح!' : 'تمت إضافة المنتج بنجاح!');
       fetchAll();
